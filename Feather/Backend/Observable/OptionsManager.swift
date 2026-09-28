@@ -19,34 +19,21 @@ class OptionsManager: ObservableObject {
 			saveOptions()
 		}
 	}
+	@Published private(set) var persistenceWarning: String?
 	
 	init() {
 		let defaults = Options.defaultOptions
-		
-		if let data = UserDefaults.standard.data(forKey: _key) {
-			do {
-				let savedDict = try JSONSerialization.jsonObject(with: data) as? [String: Any] ?? [:]
-				
-				let defaultData = try JSONEncoder().encode(defaults)
-				var mergedDict = try JSONSerialization.jsonObject(with: defaultData) as? [String: Any] ?? [:]
-
-				for (key, value) in savedDict {
-					mergedDict[key] = value
-				}
-				
-				let mergedData = try JSONSerialization.data(withJSONObject: mergedDict)
-				self.options = try JSONDecoder().decode(Options.self, from: mergedData)
-				return
-			} catch {
-				print("Failed to decode or merge options, falling back to defaults :/ \(error)")
-			}
+		if let data = UserDefaults.standard.data(forKey: _key), let decoded = try? JSONDecoder().decode(Options.self, from: data) {
+			self.options = decoded
+			self.persistenceWarning = nil
+			return
 		}
-		
+		if UserDefaults.standard.data(forKey: _key) != nil {
+			UserDefaults.standard.set(UserDefaults.standard.data(forKey: _key), forKey: "Sparrow.invalidSigningOptionsBackup")
+			self.persistenceWarning = "Saved signing settings were invalid and were reset safely."
+		}
 		self.options = defaults
-		
-		if let encoded = try? JSONEncoder().encode(defaults) {
-			UserDefaults.standard.set(encoded, forKey: _key)
-		}
+		self.saveOptions()
 	}
 	
 	/// Saves options
