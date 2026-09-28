@@ -2,9 +2,9 @@
 
 ## Storage Cleaner
 
-Status: COMPLETE
+Status: PARTIAL
 
-`SparrowStorageManager` scans only Sparrow-owned Documents, Application Support, and Caches locations off the main thread. Imported apps and certificate storage are protected; only explicitly selected signed builds, archives, and cache locations can be removed. Cleanup is confirmed and recorded without personal paths.
+`SparrowStorageManager` scans only Sparrow-owned Documents, Application Support, and Caches locations off the main thread. Imported apps and certificate storage are protected; explicitly selected removable categories can be removed. Cleanup is confirmed and recorded without personal paths. Fine-grained per-file candidate review and active-job exclusion still need to be added.
 
 ## Icon Studio
 
@@ -20,9 +20,9 @@ The workflow selects an imported app, checks the default preset/certificate/prof
 
 ## Certificate Vault
 
-Status: COMPLETE
+Status: PARTIAL
 
-The vault reuses existing certificate records and `CertificatePasswordStore`, which stores remembered passwords in the device-only Keychain. The UI never displays password material, supports removal of the associated Keychain item, and can require LocalAuthentication before protected operations.
+The vault reuses existing certificate records and `CertificatePasswordStore`, which stores remembered passwords in the device-only Keychain. The UI never displays password material and supports removal of the associated Keychain item. LocalAuthentication unlock is available in the vault UI; wiring that lock state into every signing operation remains a follow-up.
 
 ## Build verification
 
