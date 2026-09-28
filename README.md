@@ -38,24 +38,6 @@ Users must provide their own:
 
 Never publish private signing files in a public repository.
 
-## Building Sparrow
-
-### Requirements
-
-- macOS
-- Xcode
-- Your own Apple signing configuration
-
-### Build steps
-
-1. Clone the repository.
-2. Open `Feather.xcodeproj` in Xcode.
-3. Select the app target.
-4. Configure your own signing team.
-5. Build and run on your device.
-
-The public version of Sparrow does not require private certificate files.
-
 ## Security
 
 The public repository should never contain:
