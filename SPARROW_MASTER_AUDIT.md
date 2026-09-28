@@ -19,3 +19,5 @@
 | Phase 12 public readiness | partial |  |  | partial | README/license exist; release docs being audited |
 
 No private signing files, passwords, tokens, or personal absolute paths were found in the working tree.
+
+Power Tools continuation verification: the main Release target and standalone Share Extension target build successfully; the combined app contains `SparrowShareExtension.appex`. Storage review, icon compatibility classification, sign-to-installer handoff, and SigningView vault authentication are implemented and documented.

@@ -127,3 +127,7 @@ Phase 5 now also includes persistent signing presets, a native Dashboard summary
 Phase 5 now includes expiry status pills on certificate cards and a timeout-bounded source health checker built on the existing repository URL model.
 
 Phase 5 final increment adds a confirmation-preserving Quick Sign entry point, broader Library search fields, clipboard source selection, and source/certificate health logic. Full clone editing and advanced batch preset UI remain follow-up limitations.
+
+## Power Tools completion pass
+
+The four existing Power Tools were extended as far as the iOS APIs and current architecture safely allow. See `SPARROW_POWER_TOOLS_REPORT.md` for per-tool status, tests, and explicit limitations.

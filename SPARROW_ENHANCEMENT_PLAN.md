@@ -18,3 +18,7 @@
 | Phase 3: Extension/library management | Signing | EmbeddedComponentsView, EmbeddedLibrariesView, SigningView | IMPLEMENTED (read-only browser) | Component discovery, persisted toggles, non-mutating embedded library scan | Build passed |
 | Phase 4: Sparrow updates | Integration | SettingsView | IMPLEMENTED | Official GitHub release lookup, stable filtering, semantic version comparison | Build pending disk cleanup |
 | Phase 4: Share/import handoff | Integration | FeatherApp, AppFileHandler, Info.plist | EXISTING/PRESERVED | IPA document handoff uses the shared import pipeline and security-scoped URLs | Manual device test |
+
+## Power Tools completion pass
+
+Storage Cleaner now supports per-item review and active-job protection. Icon Studio classifies file-based versus compiled icon storage. Sign & Install hands successful signing into the existing installer. Certificate Vault authenticates before SigningView retrieves protected signing material. Remaining limitations are documented in `SPARROW_POWER_TOOLS_REPORT.md`.
