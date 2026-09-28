@@ -52,6 +52,9 @@ struct AboutView: View {
 			.listRowBackground(EmptyView())
 			
 			NBSection(.localized("Credits")) {
+				Text(.localized("Sparrow is an independent modified project based on the open-source Feather project. It is not an official Feather release. Upstream: github.com/claration/feather. Licensed under GNU GPL v3.0."))
+					.foregroundStyle(.secondary)
+					.padding(.vertical, 4)
 				ForEach(_credits, id: \.github) { credit in
 					_credit(name: credit.name, desc: credit.desc, github: credit.github)
 				}

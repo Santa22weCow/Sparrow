@@ -14,7 +14,7 @@ struct InstallDiagnosticsView: View {
 			}
 			Section("Signing") { LabeledContent("Built-in certificate", value: certificateStatus) }
 			Section("What to check after a failure") {
-				Text("Open the device console and search for Install server, health check, manifest provider, or iOS refused. Feather now reports listener, TLS, provider, and timeout failures there and in the install alert.")
+				Text("Open the device console and search for Install server, health check, manifest provider, or iOS refused. Sparrow reports listener, TLS, provider, and timeout failures there and in the install alert.")
 					.font(.footnote).foregroundStyle(.secondary)
 			}
 		}

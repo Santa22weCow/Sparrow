@@ -19,7 +19,7 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>thewonderofyou.Feather.ipa</string>
+				<string>com.valentinobomba.sparrow.ipa</string>
 			</array>
 		</dict>
 		<dict>
@@ -33,7 +33,7 @@
 			<string>Alternate</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>thewonderofyou.Feather.tipa</string>
+				<string>com.valentinobomba.sparrow.tipa</string>
 			</array>
 		</dict>
 	</array>
@@ -114,9 +114,10 @@
 			<key>CFBundleURLIconFile</key>
 			<string>feather_extension</string>
 			<key>CFBundleURLName</key>
-			<string>thewonderofyou.Feather</string>
+			<string>com.valentinobomba.sparrow</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>sparrow</string>
 				<string>feather</string>
 			</array>
 		</dict>
