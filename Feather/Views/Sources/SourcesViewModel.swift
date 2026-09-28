@@ -11,6 +11,7 @@ import SwiftUI
 import NimbleJSON
 
 // MARK: - Class
+@MainActor
 final class SourcesViewModel: ObservableObject {
 	static let shared = SourcesViewModel()
 	
