@@ -117,3 +117,7 @@ The queue now exposes failed-item retry logic, and identifier rules persist enab
 ## Phase 5 foundation
 
 Diagnostics and bounded privacy-safe activity history are implemented. Larger Phase 5 feature groups remain pending and Phase 6 has not started.
+
+## Phase 5 increment
+
+Added a native Sparrow Dashboard, privacy-safe bounded activity history/diagnostics, and persistent signing presets. Existing signing and import engines remain unchanged. Certificate health, cloning, source backup/health, advanced Library filtering, and richer batch controls remain pending.

@@ -1,13 +1,22 @@
 # Sparrow Phase 5 Report
 
-## Diagnostics and activity history
+## Implemented in this increment
 
-**Status:** Implemented.
+### Diagnostics and activity history
+Privacy-safe diagnostics, App Group/share-extension status, bounded 300-entry activity history, and clear-history support are available in Settings.
 
-**Files:** `Feather/Backend/Activity/SparrowActivityHistory.swift`, `Feather/Views/Settings/SparrowDiagnosticsView.swift`, `Feather/Views/Settings/SettingsView.swift`.
+### Signing presets
+`SparrowSigningPresetStore` persists named presets without passwords/private keys. Users can create, delete, and select a default preset. Presets reference existing certificate indexes and signing policy flags; the existing signer remains the source of truth.
 
-The new Diagnostics & Activity screen shows Sparrow version/build, iOS version, architecture, app/source/certificate counts, App Group availability, and embedded Share Extension status. Copy Diagnostics deliberately excludes passwords, private keys, tokens, and personal paths. Activity history is stored in UserDefaults, bounded to 300 events, and can be cleared.
+### Dashboard
+A native Sparrow Dashboard summarizes imported/signed apps, certificates, and sources and provides an import quick-action explanation.
 
-## Remaining Phase 5 areas
+## Build verification
 
-Certificate health dashboard, signing presets/Quick Sign, clone assistant, source health and source backup/import, expanded Library search/filtering, and richer batch actions are not yet implemented.
+- Main Sparrow target: PASS
+- SparrowShareExtension target: PASS
+- Combined embedding remains from Phase 4
+
+## Remaining Phase 5 work
+
+Certificate expiry/profile health cards, Quick Sign integration, clone assistant, source health and portable source backup/import, advanced Library filters/sorting, and richer batch-action UI remain pending. Phase 6 has not started.

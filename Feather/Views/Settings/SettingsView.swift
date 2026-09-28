@@ -41,6 +41,7 @@ struct SettingsView: View {
 	var body: some View {
 		NBNavigationView(.localized("Settings")) {
 			Form {
+				Section { NavigationLink(destination: SparrowDashboardView()) { Label("Sparrow Dashboard", systemImage: "rectangle.3.group") } }
 				#if !NIGHTLY && !DEBUG
 					SettingsDonationCellView(site: _donationsUrl)
 				#endif
@@ -74,6 +75,7 @@ struct SettingsView: View {
 				}
                 
 				NBSection(.localized("Features")) {
+					NavigationLink(destination: SparrowSigningPresetsView()) { Label("Signing Presets", systemImage: "square.stack.3d.up") }
 					NavigationLink(destination: SparrowDiagnosticsView()) { Label("Diagnostics & Activity", systemImage: "stethoscope") }
 					NavigationLink(destination: SparrowUpdatesView()) {
 						Label("Sparrow Updates", systemImage: "arrow.down.circle")
