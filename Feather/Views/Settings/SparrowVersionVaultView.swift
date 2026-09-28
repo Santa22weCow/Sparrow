@@ -15,7 +15,7 @@ struct SparrowVersionVaultView: View {
 			}
 			if groups.isEmpty { if #available(iOS 17, *) { ContentUnavailableView("No Version Groups", systemImage: "clock.arrow.circlepath", description: Text("Import multiple versions of the same bundle identifier to see them here.")) } else { Text("Import multiple versions of the same bundle identifier to see them here.") } }
 		}
-		.navigationTitle("Version Vault")
+		.navigationTitle("Version History")
 	}
 }
 

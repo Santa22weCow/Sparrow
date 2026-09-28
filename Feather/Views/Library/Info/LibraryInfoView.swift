@@ -12,6 +12,8 @@ import Zsign
 // MARK: - View
 struct LibraryInfoView: View {
 	var app: AppInfoPresentable
+	@State private var isSigningPresented = false
+	@State private var isInstallingPresented = false
 	
 	// MARK: Body
 	var body: some View {
@@ -21,19 +23,37 @@ struct LibraryInfoView: View {
 					FRAppIconView(app: app)
 						.frame(maxWidth: .infinity, alignment: .center)
 				}
+
+				Section {
+					if app.isSigned {
+						Button("Install", systemImage: "square.and.arrow.down") { isInstallingPresented = true }
+					} else {
+						Button("Sign", systemImage: "signature") { isSigningPresented = true }
+						Button("Sign & Install", systemImage: "arrow.down.app") { isSigningPresented = true }
+					}
+					Button("Export", systemImage: "square.and.arrow.up") { UIApplication.open(Storage.shared.getUuidDirectory(for: app)!.toSharedDocumentsURL()!) }
+				}
 				
 				_infoSection(for: app)
 				_certSection(for: app)
-				_bundleSection(for: app)
-				_executableSection(for: app)
-				
-				Section {
+				DisclosureGroup("Advanced") {
+					_bundleSection(for: app)
+					_executableSection(for: app)
 					NavigationLink(destination: SparrowIPAInspectorView(app: app)) { Label("Inspect IPA", systemImage: "doc.text.magnifyingglass") }
+					NavigationLink(destination: SparrowIPACompareView()) { Label("Compare With…", systemImage: "arrow.left.arrow.right") }
+					NavigationLink(destination: SparrowVersionVaultView()) { Label("Version History", systemImage: "clock.arrow.circlepath") }
 					NavigationLink(destination: CloneAppView(app: app)) { Label("Clone App", systemImage: "plus.square.on.square") }
 					Button(.localized("Open in Files"), systemImage: "folder") {
 						UIApplication.open(Storage.shared.getUuidDirectory(for: app)!.toSharedDocumentsURL()!)
 					}
 				}
+			}
+			.fullScreenCover(isPresented: $isSigningPresented) {
+				SigningView(app: app) { isInstallingPresented = true }
+			}
+			.sheet(isPresented: $isInstallingPresented) {
+				InstallPreviewView(app: app)
+					.presentationDetents([.height(200)])
 			}
 			.toolbar {
 				NBToolbarButton(role: .close)

@@ -1,5 +1,30 @@
 # Sparrow enhancement report
 
+## UI simplification pass
+**Status:** IMPLEMENTED
+
+**Architecture:** The existing signing, source, diagnostics, storage, inspector, comparison, version-history, clone, icon, and certificate-security implementations were preserved. Only their presentation and entry points were reorganized around progressive disclosure.
+
+**Files changed:** `Feather/Views/TabView/TabEnum.swift`, `Feather/Views/TabView/Bars/TabbarView.swift`, `Feather/Views/Library/LibraryView.swift`, `Feather/Views/Library/Info/LibraryInfoView.swift`, `Feather/Views/Sources/SourcesView.swift`, `Feather/Views/Settings/SettingsView.swift`, `Feather/Views/Settings/SparrowToolboxView.swift`, `Feather/Views/Settings/SparrowVersionVaultView.swift`.
+
+**New navigation:** Library (default), Sources, Signing, Updates, Settings.
+
+**Moved behind secondary navigation:** Dashboard, diagnostics, activity, storage management, IPA inspection, comparison, version history, icon customization, cloning, certificate security, archive/install diagnostics, and source management utilities.
+
+**Preserved:** Share Extension import, drag-and-drop, Files import, URL import, source search/pinning, App Store browsing, signing preflight, installation, and all advanced backend services.
+
+**Regression paths:**
+
+- Library → Import IPA → Sign → Install remains available.
+- Sources → App Store/Source Apps → Download → Library remains available.
+- App Details → Advanced → Inspect IPA/Compare/Version History remains available.
+- Settings → Advanced Tools → Storage/Diagnostics remains available.
+- Settings → Signing → Certificates/Certificate Security remains available.
+
+**Build verification:** Release build completed successfully with `SparrowShareExtension.appex` embedded in `Sparrow.app`. Existing package warnings remain outside this pass.
+
+**Known limitations:** Physical-device install and VoiceOver/Dynamic Type review still require manual device QA; the five-tab layout is intentionally fixed for a simpler default experience.
+
 ## Source favorites / pinning
 **Status:** IMPLEMENTED
 

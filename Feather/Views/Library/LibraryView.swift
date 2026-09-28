@@ -138,15 +138,12 @@ struct LibraryView: View {
 				{
 					if #available(iOS 17, *) {
 						ContentUnavailableView {
-							Label(.localized("No Apps"), systemImage: "questionmark.app.fill")
+							Label("No Apps Yet", systemImage: "square.grid.2x2")
 						} description: {
-							Text(.localized("Get started by importing your first IPA file."))
+							Text("Import an IPA or download one from Sources.")
 						} actions: {
-							Menu {
-								_importActions()
-							} label: {
-								NBButton(.localized("Import"), style: .text)
-							}
+							Button("Import IPA", systemImage: "plus") { _isImportingPresenting = true }
+							Menu("More Import Options", systemImage: "ellipsis.circle") { _importActions() }
 						}
 					}
 				}

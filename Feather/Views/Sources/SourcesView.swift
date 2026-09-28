@@ -83,12 +83,15 @@ struct SourcesView: View {
 				}
 			}
 			.toolbar {
-				ToolbarItemGroup(placement: .topBarLeading) {
-					Button("Export Sources", systemImage: "square.and.arrow.up") { _exportData = SparrowSourceTransfer.export(Array(_sources)) }
-					Button("Import Sources", systemImage: "square.and.arrow.down") { _isImportingSources = true }
-					Button("Add from Clipboard", systemImage: "doc.on.clipboard") {
-						_clipboardURLs = clipboardSourceURLs
-						_showClipboardSources = !_clipboardURLs.isEmpty
+				ToolbarItem(placement: .topBarLeading) {
+					Menu("More", systemImage: "ellipsis.circle") {
+						NavigationLink(destination: AppStoreView()) { Label("App Store", systemImage: "bag") }
+						Button("Export Sources", systemImage: "square.and.arrow.up") { _exportData = SparrowSourceTransfer.export(Array(_sources)) }
+						Button("Import Sources", systemImage: "square.and.arrow.down") { _isImportingSources = true }
+						Button("Add from Clipboard", systemImage: "doc.on.clipboard") {
+							_clipboardURLs = clipboardSourceURLs
+							_showClipboardSources = !_clipboardURLs.isEmpty
+						}
 					}
 				}
 				NBToolbarButton(

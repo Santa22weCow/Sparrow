@@ -12,6 +12,8 @@ enum TabEnum: String, CaseIterable, Hashable {
 	case sources
 	case store
 	case library
+	case signing
+	case updates
 	case settings
 	case certificates
 	
@@ -20,6 +22,8 @@ enum TabEnum: String, CaseIterable, Hashable {
 		case .sources:     	return .localized("Sources")
 		case .store: return "App Store"
 		case .library: 		return .localized("Library")
+		case .signing: 		return "Signing"
+		case .updates: 		return "Updates"
 		case .settings: 	return .localized("Settings")
 		case .certificates:	return .localized("Certificates")
 		}
@@ -30,6 +34,8 @@ enum TabEnum: String, CaseIterable, Hashable {
 		case .sources: 		return "globe.desk"
 		case .store: return "bag"
 		case .library: 		return "square.grid.2x2"
+		case .signing: 		return "signature"
+		case .updates: 		return "arrow.down.circle"
 		case .settings: 	return "gearshape.2"
 		case .certificates: return "person.text.rectangle"
 		}
@@ -41,18 +47,15 @@ enum TabEnum: String, CaseIterable, Hashable {
 		case .sources: SourcesView()
 		case .store: AppStoreView()
 		case .library: LibraryView()
+		case .signing: NBNavigationView("Signing") { SparrowSignInstallView() }
+		case .updates: NBNavigationView("Updates") { SparrowUpdatesView() }
 		case .settings: SettingsView()
 		case .certificates: NBNavigationView(.localized("Certificates")) { CertificatesView() }
 		}
 	}
 	
 	static var defaultTabs: [TabEnum] {
-		return [
-			.store,
-			.sources,
-			.library,
-			.settings
-		]
+		return [.library, .sources, .signing, .updates, .settings]
 	}
 	
 	static var customizableTabs: [TabEnum] {

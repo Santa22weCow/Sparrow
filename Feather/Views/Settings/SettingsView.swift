@@ -41,23 +41,19 @@ struct SettingsView: View {
 	var body: some View {
 		NBNavigationView(.localized("Settings")) {
 			Form {
-				Section { NavigationLink(destination: SparrowDashboardView()) { Label("Sparrow Dashboard", systemImage: "rectangle.3.group") } }
-				#if !NIGHTLY && !DEBUG
-					SettingsDonationCellView(site: _donationsUrl)
-				#endif
-                
-				_feedback()
-                
-				Section {
+				Section("General") {
 					NavigationLink(destination: AppearanceView()) {
 						Label(.localized("Appearance"), systemImage: "paintbrush")
 					}
 					NavigationLink(destination: AppIconView(currentIcon: $_currentIcon)) {
 						Label(.localized("App Icon"), systemImage: "app.badge")
 					}
+					NavigationLink(destination: SparrowUpdatesView()) {
+						Label("Updates", systemImage: "arrow.down.circle")
+					}
 				}
                 
-				NBSection(.localized("Certificates")) {
+				Section("Signing") {
                     
 					if let cert = selectedCertificate {
 						CertificatesCellView(cert: cert)
@@ -69,48 +65,40 @@ struct SettingsView: View {
 					NavigationLink(destination: CertificatesView()) {
 						Label(.localized("Certificates"), systemImage: "checkmark.seal")
 					}
-                 
-				} footer: {
-					Text(.localized("Add and manage certificates used for signing applications."))
-				}
-                
-				NBSection(.localized("Features")) {
-					NavigationLink(destination: SparrowStorageCleanerView()) { Label("Storage", systemImage: "internaldrive") }
-					NavigationLink(destination: SparrowCertificateVaultView()) { Label("Certificate Vault", systemImage: "lock.shield") }
+					NavigationLink(destination: SparrowCertificateVaultView()) { Label("Certificate Security", systemImage: "lock.shield") }
 					NavigationLink(destination: SparrowSigningPresetsView()) { Label("Signing Presets", systemImage: "square.stack.3d.up") }
-					NavigationLink(destination: SparrowDiagnosticsView()) { Label("Diagnostics & Activity", systemImage: "stethoscope") }
-					NavigationLink(destination: SparrowUpdatesView()) {
-						Label("Sparrow Updates", systemImage: "arrow.down.circle")
-					}
 					NavigationLink(destination: ConfigurationView()) {
 						Label(.localized("Signing Options"), systemImage: "signature")
 					}
-					NavigationLink(destination: ArchiveView()) {
-						Label(.localized("Archive & Compression"), systemImage: "archivebox")
-					}
-					NavigationLink(destination: InstallationView()) {
-						Label(.localized("Installation"), systemImage: "arrow.down.circle")
-					}
-					NavigationLink(destination: InstallDiagnosticsView()) {
-						Label("Install Diagnostics", systemImage: "stethoscope")
-					}
-					NavigationLink(destination: ArchiveManagerView()) {
-						Label("App Archive", systemImage: "archivebox")
-					}
-				} footer: {
-					Text(.localized("Configure the apps way of installing, its zip compression levels, and custom modifications to apps."))
 				}
                 
+				Section("Storage") {
+					NavigationLink(destination: SparrowStorageCleanerView()) { Label("Manage Storage", systemImage: "internaldrive") }
+					NavigationLink(destination: ArchiveManagerView()) { Label("App Archive", systemImage: "archivebox") }
+				}
+
+				Section("Advanced") {
+					NavigationLink(destination: SparrowToolboxView()) { Label("Advanced Tools", systemImage: "wrench.and.screwdriver") }
+					NavigationLink(destination: SparrowDiagnosticsView()) { Label("Diagnostics", systemImage: "stethoscope") }
+					NavigationLink(destination: InstallDiagnosticsView()) { Label("Install Diagnostics", systemImage: "stethoscope") }
+					NavigationLink(destination: ArchiveView()) { Label(.localized("Archive & Compression"), systemImage: "archivebox") }
+					NavigationLink(destination: InstallationView()) { Label(.localized("Installation"), systemImage: "arrow.down.circle") }
+				}
+
+				Section("About") {
+					NavigationLink(destination: AboutView()) {
+						Label { Text(verbatim: .localized("About %@", arguments: Bundle.main.name)) } icon: { FRAppIconView(size: 23) }
+					}
+					Button(.localized("GitHub Repository"), systemImage: "safari") { UIApplication.open(_githubUrl) }
+					Button(.localized("Submit Feedback"), systemImage: "safari") { UIApplication.open(URL(string: "\(_githubUrl)/issues/new/choose")!) }
+					NavigationLink(destination: ResetView()) { Label(.localized("Reset"), systemImage: "trash") }
+				}
+
 				_directories()
-                
-				Section {
-					NavigationLink(destination: SparrowToolboxView()) { Label("Sparrow Toolbox", systemImage: "wrench.and.screwdriver") }
-					NavigationLink(destination: ResetView()) {
-						Label(.localized("Reset"), systemImage: "trash")
-					}
-				} footer: {
-					Text(.localized("Reset the applications sources, certificates, apps, and general contents."))
-				}
+
+				#if !NIGHTLY && !DEBUG
+					SettingsDonationCellView(site: _donationsUrl)
+				#endif
 			}
 		}
 	}

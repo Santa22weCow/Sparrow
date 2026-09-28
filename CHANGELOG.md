@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased — UI simplification
+
+- Library is now the default launch screen.
+- Main navigation is limited to Library, Sources, Signing, Updates, and Settings.
+- Advanced tools remain available under Settings → Advanced Tools instead of primary navigation.
+- App details now emphasize Sign, Sign & Install, Install, and Export, with inspection and power tools under Advanced.
+- Source import/export, clipboard actions, and the App Store are grouped behind the Sources More menu.
+- Empty Library and technical labels were simplified for first-time users.
+
 ## Sparrow 1.0.2
 
 ### Bug Fixes
