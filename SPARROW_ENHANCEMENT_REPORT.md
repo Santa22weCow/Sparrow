@@ -113,3 +113,7 @@ The queue now exposes failed-item retry logic, and identifier rules persist enab
 **Update workflow:** The existing official-release screen now provides channel-aware cached checks and IPA asset links. Download/sign/install remains explicit and is not performed silently.
 
 **Known limitations:** The local Xcode package graph must be repaired before both-target compilation can be confirmed. The extension UI is intentionally lightweight; app metadata preview and a full in-extension certificate availability check remain follow-up polish.
+
+## Phase 5 foundation
+
+Diagnostics and bounded privacy-safe activity history are implemented. Larger Phase 5 feature groups remain pending and Phase 6 has not started.

@@ -74,6 +74,7 @@ struct SettingsView: View {
 				}
                 
 				NBSection(.localized("Features")) {
+					NavigationLink(destination: SparrowDiagnosticsView()) { Label("Diagnostics & Activity", systemImage: "stethoscope") }
 					NavigationLink(destination: SparrowUpdatesView()) {
 						Label("Sparrow Updates", systemImage: "arrow.down.circle")
 					}
