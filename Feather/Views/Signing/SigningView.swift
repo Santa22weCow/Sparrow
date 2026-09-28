@@ -36,9 +36,11 @@ struct SigningView: View {
 	}
 	
 	var app: AppInfoPresentable
-	
-	init(app: AppInfoPresentable) {
+	var onSigned: (() -> Void)?
+
+	init(app: AppInfoPresentable, onSigned: (() -> Void)? = nil) {
 		self.app = app
+		self.onSigned = onSigned
 		let storedCert = UserDefaults.standard.integer(forKey: "feather.selectedCert")
 		__temporaryCertificate = State(initialValue: storedCert)
 	}
@@ -292,7 +294,12 @@ extension SigningView {
 		let generator = UIImpactFeedbackGenerator(style: .light)
 		generator.impactOccurred()
 		_isSigning = true
-		
+		SparrowCertificateVaultSession.shared.authorize { authorized, reason in
+			guard authorized else {
+				_isSigning = false
+				UIAlertController.showAlertWithOk(title: "Certificate Vault Locked", message: reason ?? "Authentication is required before signing.", isCancel: true)
+				return
+			}
 		FR.signPackageFile(
 			app,
 			using: _temporaryOptions,
@@ -310,6 +317,7 @@ extension SigningView {
 					actions: [ok]
 				)
 			} else {
+				onSigned?()
 				if
 					_temporaryOptions.post_deleteAppAfterSigned,
 					!app.isSigned
@@ -324,6 +332,7 @@ extension SigningView {
 				}
 				dismiss()
 			}
+		}
 		}
 	}
 }

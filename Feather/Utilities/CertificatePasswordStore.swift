@@ -1,5 +1,28 @@
 import Foundation
 import Security
+import LocalAuthentication
+
+final class SparrowCertificateVaultSession: ObservableObject {
+	static let shared = SparrowCertificateVaultSession()
+	@Published private(set) var authorizedUntil: Date?
+	private init() {}
+	var isProtectionEnabled: Bool { UserDefaults.standard.bool(forKey: "Sparrow.certificateVault.biometricProtection") }
+	var isAuthorized: Bool { !isProtectionEnabled || (authorizedUntil.map { $0 > Date() } ?? false) }
+	func authorize(completion: @escaping (Bool, String?) -> Void) {
+		guard isProtectionEnabled else { completion(true, nil); return }
+		if isAuthorized { completion(true, nil); return }
+		let context = LAContext(); var error: NSError?
+		guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else { completion(false, error?.localizedDescription ?? "Device authentication is unavailable."); return }
+		context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Authorize Sparrow signing") { success, authError in
+			DispatchQueue.main.async {
+				if success { self.authorizedUntil = Date().addingTimeInterval(60); SparrowActivityHistory.shared.record(operation: "Certificate Vault Unlocked", result: "Success") }
+				else { SparrowActivityHistory.shared.record(operation: "Certificate Vault Unlocked", result: "Failed"); }
+				completion(success, authError?.localizedDescription)
+			}
+		}
+	}
+	func lock() { authorizedUntil = nil; SparrowActivityHistory.shared.record(operation: "Certificate Vault Locked", result: "Success") }
+}
 
 enum CertificatePasswordStore {
 	private static let service = "thewonderofyou.Feather.certificate-password"
