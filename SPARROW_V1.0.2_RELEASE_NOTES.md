@@ -14,4 +14,4 @@ No signing certificates or private credentials are bundled with Sparrow.
 
 Artifact: `Sparrow-v1.0.2.ipa`
 
-SHA-256: `11fb2d7bbb6ddde8b9719d109826467927a6fc74c274788d4b02e5ba89170d85`
+SHA-256: `845a77130ee0103ad1f05461a4fb2fc7753318c658befcd624bc351050d78bf3`
