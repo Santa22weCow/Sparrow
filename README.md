@@ -1,8 +1,10 @@
 # Sparrow 🐦
 
-Sparrow is a modern iOS signing and sideloading app built from the Feather codebase, with extra tools for repository management, bulk signing, provisioning-profile checks, embedded components, and app management.
+![Sparrow Preview](assets/sparrow-preview.png)
 
-> Sparrow is an independent modified project. It is not an official Feather release.
+**Sparrow** is a modern iOS signing and sideloading app based on the Feather codebase, with extra tools for repository management, bulk signing, provisioning-profile checks, embedded components, and app management.
+
+> Sparrow is an independent modified project and is **not** an official Feather release.
 
 ## Features
 
@@ -21,12 +23,12 @@ Sparrow is a modern iOS signing and sideloading app built from the Feather codeb
 - Optional unique keychain groups
 - Embedded extension browser
 - Embedded dylib/framework browser
-- Library export tools
+- Export embedded libraries
 - No bundled private signing credentials
 
 ## Signing
 
-Sparrow does not include any signing certificate, private key, provisioning profile, or certificate password.
+Sparrow does **not** include any signing certificate, private key, provisioning profile, or certificate password.
 
 Users must provide their own:
 
@@ -66,7 +68,7 @@ Secrets.xcconfig
 PrivateSigning/
 ```
 
-Normal certificate import remains available in the app, but all signing material must be supplied by the user at build or runtime.
+Normal certificate import remains available, but all signing material must be supplied by the user at build or runtime.
 
 ## Credits & Upstream Project
 
