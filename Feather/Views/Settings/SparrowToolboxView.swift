@@ -12,6 +12,7 @@ struct SparrowToolboxView: View {
 				NavigationLink(destination: SparrowIPACompareView()) { Label("Compare IPAs", systemImage: "arrow.left.arrow.right") }
 				NavigationLink(destination: SparrowVersionVaultView()) { Label("Version Vault", systemImage: "clock.arrow.circlepath") }
 				NavigationLink(destination: SparrowStorageCleanerView()) { Label("Storage Cleaner", systemImage: "internaldrive") }
+				NavigationLink(destination: SparrowIconStudioView()) { Label("Icon Studio", systemImage: "photo") }
 			}
 		}
 		.navigationTitle("Sparrow Toolbox")
