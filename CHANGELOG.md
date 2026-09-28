@@ -8,6 +8,7 @@
 - App details now emphasize Sign, Sign & Install, Install, and Export, with inspection and power tools under Advanced.
 - Source import/export, clipboard actions, and the App Store are grouped behind the Sources More menu.
 - Empty Library and technical labels were simplified for first-time users.
+- Added Advanced Tools for JIT/pairing status, privacy-safe device identifiers, controlled file browsing, app capability inspection, and bulk signing access.
 
 ## Sparrow 1.0.2
 

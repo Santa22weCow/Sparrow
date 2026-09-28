@@ -156,3 +156,21 @@ Phase 5 final increment adds a confirmation-preserving Quick Sign entry point, b
 ## Power Tools completion pass
 
 The four existing Power Tools were extended as far as the iOS APIs and current architecture safely allow. See `SPARROW_POWER_TOOLS_REPORT.md` for per-tool status, tests, and explicit limitations.
+
+## Advanced tools continuation
+
+### JIT Enabler
+**Status:** SAFETY-GATED UI IMPLEMENTED. Sparrow reports local pairing metadata and routes users to the existing tunnel/pairing workflow. It does not claim JIT success without a supported helper because public iOS APIs cannot grant a JIT entitlement to an installed app.
+
+### Device Identifier Grabber
+**Status:** IMPLEMENTED. Device Identifiers shows iOS-provided device name, model, OS version, identifierForVendor, and the presence (without exposing contents) of local pairing metadata. Copy and Copy All are available.
+
+### Controlled File Manager
+**Status:** IMPLEMENTED. File Manager is restricted to Sparrow's Unsigned, Signed, Archives, and Certificates directories. It supports search, safe delete, IPA/profile/P12/plist/ZIP classification, plist preview, and system sharing/export.
+
+### App Capability Viewer
+**Status:** IMPLEMENTED. App Capabilities reuses SparrowIPAInspector for bundle metadata, embedded components, URL schemes, and detected entitlement categories.
+
+**Files:** `Feather/Views/Settings/SparrowAdvancedToolsViews.swift`, `Feather/Views/Settings/SparrowToolboxView.swift`.
+
+**Known limitations:** Existing DownloadManager and BulkSigningView remain the source of truth for download and sequential signing queues. Full JIT activation requires an external, platform-compatible pairing/JIT helper; Sparrow deliberately never fabricates a success result. Duplicate-import conflict UI and a richer source category browser remain follow-up work.
