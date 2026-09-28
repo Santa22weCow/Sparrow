@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 import NimbleViews
+import UniformTypeIdentifiers
 
 // MARK: - View
 struct LibraryView: View {
@@ -119,6 +120,14 @@ struct LibraryView: View {
 				ForEach(Scope.allCases, id: \.displayName) { scope in
 					Text(scope.displayName).tag(scope)
 				}
+			}
+			.onDrop(of: [UTType.fileURL.identifier], isTargeted: nil) { providers in
+				guard let provider = providers.first else { return false }
+				provider.loadItem(forTypeIdentifier: UTType.fileURL.identifier, options: nil) { item, _ in
+					guard let data = item as? Data, let url = URL(dataRepresentation: data, relativeTo: nil), ["ipa", "tipa"].contains(url.pathExtension.lowercased()) else { return }
+					DispatchQueue.main.async { FR.handlePackageFile(url) { _ in } }
+				}
+				return true
 			}
 			.scrollDismissesKeyboard(.interactively)
 			.overlay {
