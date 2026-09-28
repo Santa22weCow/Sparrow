@@ -76,6 +76,7 @@ struct SettingsView: View {
                 
 				NBSection(.localized("Features")) {
 					NavigationLink(destination: SparrowStorageCleanerView()) { Label("Storage", systemImage: "internaldrive") }
+					NavigationLink(destination: SparrowCertificateVaultView()) { Label("Certificate Vault", systemImage: "lock.shield") }
 					NavigationLink(destination: SparrowSigningPresetsView()) { Label("Signing Presets", systemImage: "square.stack.3d.up") }
 					NavigationLink(destination: SparrowDiagnosticsView()) { Label("Diagnostics & Activity", systemImage: "stethoscope") }
 					NavigationLink(destination: SparrowUpdatesView()) {

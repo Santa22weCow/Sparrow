@@ -14,6 +14,7 @@ struct SparrowToolboxView: View {
 				NavigationLink(destination: SparrowStorageCleanerView()) { Label("Storage Cleaner", systemImage: "internaldrive") }
 				NavigationLink(destination: SparrowIconStudioView()) { Label("Icon Studio", systemImage: "photo") }
 				NavigationLink(destination: SparrowSignInstallView()) { Label("Sign & Install", systemImage: "arrow.down.app") }
+				NavigationLink(destination: SparrowCertificateVaultView()) { Label("Certificate Vault", systemImage: "lock.shield") }
 			}
 		}
 		.navigationTitle("Sparrow Toolbox")
