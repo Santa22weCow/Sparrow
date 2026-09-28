@@ -14,6 +14,7 @@ final class AppFileHandler: NSObject, @unchecked Sendable {
 	private let _uuid = UUID().uuidString
 	private let _uniqueWorkDir: URL
 	var uniqueWorkDirPayload: URL?
+	var progressHandler: ((Double) -> Void)?
 
 	private var _ipa: URL
 	private let _install: Bool
@@ -43,7 +44,27 @@ final class AppFileHandler: NSObject, @unchecked Sendable {
 
 		try _fileManager.removeFileIfNeeded(at: destinationURL)
 		
-		try _fileManager.copyItem(at: _ipa, to: destinationURL)
+		let attributes = try _fileManager.attributesOfItem(atPath: _ipa.path)
+		let expected = (attributes[.size] as? NSNumber)?.int64Value ?? 0
+		guard expected > 0 else { throw ImportedFileHandlerError.invalidFile }
+		guard (try? _fileManager.attributesOfFileSystem(forPath: _uniqueWorkDir.path)[.systemFreeSize] as? NSNumber)?.int64Value ?? 0 > expected else { throw ImportedFileHandlerError.insufficientStorage }
+		try _fileManager.removeFileIfNeeded(at: destinationURL)
+		FileManager.default.createFile(atPath: destinationURL.path, contents: nil)
+		let input = try FileHandle(forReadingFrom: _ipa)
+		let output = try FileHandle(forWritingTo: destinationURL)
+		defer { try? input.close(); try? output.close() }
+		var copied: Int64 = 0
+		while true {
+			try Task.checkCancellation()
+			let chunk = try input.read(upToCount: 4 * 1024 * 1024) ?? Data()
+			if chunk.isEmpty { break }
+			try output.write(contentsOf: chunk)
+			copied += Int64(chunk.count)
+			let progress = min(1, Double(copied) / Double(expected))
+			progressHandler?(progress)
+			if let download = _download { DispatchQueue.main.async { download.progress = progress; download.bytesDownloaded = copied; download.totalBytes = expected } }
+		}
+		guard copied == expected else { throw ImportedFileHandlerError.invalidFile }
 		_ipa = destinationURL
 	}
 	
@@ -144,4 +165,6 @@ final class AppFileHandler: NSObject, @unchecked Sendable {
 
 private enum ImportedFileHandlerError: Error {
 	case payloadNotFound
+	case invalidFile
+	case insufficientStorage
 }
