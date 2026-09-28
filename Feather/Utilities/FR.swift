@@ -185,9 +185,19 @@ enum FR {
 			switch result {
 			case .success(let pack):
 				do {
-					try FileManager.forceWrite(content: pack.key, to: "server.pem")
-					try FileManager.forceWrite(content: pack.cert, to: "server.crt")
-					try FileManager.forceWrite(content: pack.info.domains.commonName, to: "commonName.txt")
+					guard !pack.key.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+						!pack.cert.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+						!pack.info.domains.commonName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { throw NSError(domain: "SparrowTLS", code: 1, userInfo: [NSLocalizedDescriptionKey: "The installation certificate response was incomplete."]) }
+					let fm = FileManager.default
+					let root = URL.documentsDirectory
+					let token = UUID().uuidString
+					let staged: [(String, String)] = [("server.pem", pack.key), ("server.crt", pack.cert), ("commonName.txt", pack.info.domains.commonName)]
+					for (name, value) in staged {
+						let temporary = root.appendingPathComponent(".\(name).\(token).tmp")
+						try value.write(to: temporary, atomically: true, encoding: .utf8)
+						let destination = root.appendingPathComponent(name)
+						if fm.fileExists(atPath: destination.path) { _ = try fm.replaceItemAt(destination, withItemAt: temporary) } else { try fm.moveItem(at: temporary, to: destination) }
+					}
 					generator.notificationOccurred(.success)
 					completion(true)
 				} catch {
