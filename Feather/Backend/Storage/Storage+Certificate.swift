@@ -34,7 +34,7 @@ extension Storage {
 		new.isDefault = isDefault
 		if let password {
 			do { try CertificatePasswordStore.save(password, certificateID: uuid) }
-			catch { completion(error); return }
+			catch { context.delete(new); saveContext(); completion(error); return }
 		}
 		Storage.shared.revokagedCertificate(for: new)
 		saveContext()
@@ -67,17 +67,17 @@ extension Storage {
 	
 	func revokagedCertificate(for cert: CertificatePair) {
 		guard !cert.revoked else { return }
-		
+		guard let provision = getFile(.provision, from: cert), let p12 = getFile(.certificate, from: cert),
+			FileManager.default.isReadableFile(atPath: provision.path), FileManager.default.isReadableFile(atPath: p12.path) else { return }
+		let certificateID = cert.objectID
 		Zsign.checkRevokage(
-			provisionPath: Storage.shared.getFile(.provision, from: cert)?.path ?? "",
-			p12Path: Storage.shared.getFile(.certificate, from: cert)?.path ?? "",
+			provisionPath: provision.path,
+			p12Path: p12.path,
 			p12Password: password(for: cert) ?? ""
-		) { (status, _, _) in
-			if status == 1 {
-				DispatchQueue.main.async {
-					cert.revoked = true
-					self.saveContext()
-				}
+		) { [weak self] status, _, _ in
+			DispatchQueue.main.async {
+				guard let self, let object = try? self.context.existingObject(with: certificateID), let certificate = object as? CertificatePair else { return }
+				if status == 1 { certificate.revoked = true; self.saveContext() }
 			}
 		}
 	}
