@@ -369,7 +369,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				COMPRESS_PNG_FILES = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
@@ -434,7 +434,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				COMPRESS_PNG_FILES = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
@@ -485,8 +485,8 @@
 			};
 			name = Release;
 		};
-		SPEXDEBUG /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_ENTITLEMENTS = SparrowShareExtension/SparrowShareExtension.entitlements; INFOPLIST_FILE = SparrowShareExtension/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; PRODUCT_BUNDLE_IDENTIFIER = com.sparrow.app.share; PRODUCT_NAME = SparrowShareExtension; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; SDKROOT = iphoneos; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; CLANG_ENABLE_MODULES = YES; }; name = Debug; };
-		SPEXRELEASE /* Release */ = {isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_ENTITLEMENTS = SparrowShareExtension/SparrowShareExtension.entitlements; INFOPLIST_FILE = SparrowShareExtension/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; PRODUCT_BUNDLE_IDENTIFIER = com.sparrow.app.share; PRODUCT_NAME = SparrowShareExtension; SWIFT_OPTIMIZATION_LEVEL = "-O"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; SDKROOT = iphoneos; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; CLANG_ENABLE_MODULES = YES; }; name = Release; };
+	SPEXDEBUG /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_ENTITLEMENTS = SparrowShareExtension/SparrowShareExtension.entitlements; CURRENT_PROJECT_VERSION = 2; INFOPLIST_FILE = SparrowShareExtension/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; MARKETING_VERSION = "$(SPARROW_PROJECT_VERSION)-debug"; PRODUCT_BUNDLE_IDENTIFIER = com.sparrow.app.share; PRODUCT_NAME = SparrowShareExtension; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; SDKROOT = iphoneos; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; CLANG_ENABLE_MODULES = YES; }; name = Debug; };
+	SPEXRELEASE /* Release */ = {isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_ENTITLEMENTS = SparrowShareExtension/SparrowShareExtension.entitlements; CURRENT_PROJECT_VERSION = 2; INFOPLIST_FILE = SparrowShareExtension/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; MARKETING_VERSION = "$(SPARROW_PROJECT_VERSION)"; PRODUCT_BUNDLE_IDENTIFIER = com.sparrow.app.share; PRODUCT_NAME = SparrowShareExtension; SWIFT_OPTIMIZATION_LEVEL = "-O"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; SDKROOT = iphoneos; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; CLANG_ENABLE_MODULES = YES; }; name = Release; };
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
