@@ -9,6 +9,7 @@ import CoreData
 import AltSourceKit
 import SwiftUI
 import NimbleViews
+import UniformTypeIdentifiers
 
 // MARK: - View
 struct SourcesView: View {
@@ -18,6 +19,8 @@ struct SourcesView: View {
 	@StateObject var viewModel = SourcesViewModel.shared
 	@State private var _isAddingPresenting = false
 	@State private var _addingSourceLoading = false
+	@State private var _isImportingSources = false
+	@State private var _exportData: Data?
 	@State private var _searchText = ""
 	
 	private var _filteredSources: [AltSource] {
@@ -74,6 +77,10 @@ struct SourcesView: View {
 				}
 			}
 			.toolbar {
+				ToolbarItemGroup(placement: .topBarLeading) {
+					Button("Export Sources", systemImage: "square.and.arrow.up") { _exportData = SparrowSourceTransfer.export(Array(_sources)) }
+					Button("Import Sources", systemImage: "square.and.arrow.down") { _isImportingSources = true }
+				}
 				NBToolbarButton(
 					systemImage: "plus",
 					style: .icon,
@@ -89,6 +96,10 @@ struct SourcesView: View {
 			.sheet(isPresented: $_isAddingPresenting) {
 				SourcesAddView()
 			}
+			.fileImporter(isPresented: $_isImportingSources, allowedContentTypes: [.json]) { result in
+				if case .success(let url) = result, url.startAccessingSecurityScopedResource() { defer { url.stopAccessingSecurityScopedResource() }; _ = try? SparrowSourceTransfer.importRecords(from: url, into: Storage.shared) }
+			}
+			.sheet(isPresented: Binding(get: { _exportData != nil }, set: { if !$0 { _exportData = nil } })) { if let data = _exportData { ShareLink(item: data, preview: SharePreview("Sparrow Sources", image: Image(systemName: "globe"))).padding() } }
 		}
 		.task(id: Array(_sources)) {
 			await viewModel.fetchSources(_sources)

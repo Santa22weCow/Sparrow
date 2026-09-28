@@ -121,3 +121,5 @@ Diagnostics and bounded privacy-safe activity history are implemented. Larger Ph
 ## Phase 5 increment
 
 Added a native Sparrow Dashboard, privacy-safe bounded activity history/diagnostics, and persistent signing presets. Existing signing and import engines remain unchanged. Certificate health, cloning, source backup/health, advanced Library filtering, and richer batch controls remain pending.
+
+Phase 5 now also includes persistent signing presets, a native Dashboard summary, and source list export/import that excludes credentials and certificate material.

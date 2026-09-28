@@ -20,3 +20,7 @@ A native Sparrow Dashboard summarizes imported/signed apps, certificates, and so
 ## Remaining Phase 5 work
 
 Certificate expiry/profile health cards, Quick Sign integration, clone assistant, source health and portable source backup/import, advanced Library filters/sorting, and richer batch-action UI remain pending. Phase 6 has not started.
+
+## Additional Phase 5 increment
+
+Added persistent signing preset management, a native Dashboard summary, and privacy-safe source export/import (`sparrow-sources.json` data contains only source URL/name/pin state). Existing signing/import engines and Phase 4 Share Extension remain unchanged.
