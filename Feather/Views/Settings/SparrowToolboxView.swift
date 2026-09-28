@@ -9,7 +9,8 @@ struct SparrowToolboxView: View {
 				NavigationLink(destination: SparrowSigningPresetsView()) { Label("Signing Presets", systemImage: "square.stack.3d.up") }
 			}
 			Section("Power Tools") {
-				Text("Icon Studio, IPA Inspector, Compare IPAs, Sparrow Drop, and Storage Cleaner will appear here as each tool receives its safe file-processing implementation.").foregroundStyle(.secondary)
+				NavigationLink(destination: SparrowIPACompareView()) { Label("Compare IPAs", systemImage: "arrow.left.arrow.right") }
+				Text("Icon Studio, Sparrow Drop, and Storage Cleaner will appear here as each tool receives its safe file-processing implementation.").foregroundStyle(.secondary)
 			}
 		}
 		.navigationTitle("Sparrow Toolbox")
