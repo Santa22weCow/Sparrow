@@ -28,6 +28,7 @@ struct LibraryInfoView: View {
 				_executableSection(for: app)
 				
 				Section {
+					NavigationLink(destination: SparrowIPAInspectorView(app: app)) { Label("Inspect IPA", systemImage: "doc.text.magnifyingglass") }
 					NavigationLink(destination: CloneAppView(app: app)) { Label("Clone App", systemImage: "plus.square.on.square") }
 					Button(.localized("Open in Files"), systemImage: "folder") {
 						UIApplication.open(Storage.shared.getUuidDirectory(for: app)!.toSharedDocumentsURL()!)
