@@ -102,6 +102,7 @@ struct SettingsView: View {
 				_directories()
                 
 				Section {
+					NavigationLink(destination: SparrowToolboxView()) { Label("Sparrow Toolbox", systemImage: "wrench.and.screwdriver") }
 					NavigationLink(destination: ResetView()) {
 						Label(.localized("Reset"), systemImage: "trash")
 					}
