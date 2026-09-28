@@ -66,6 +66,11 @@ extension CertificatesCellView {
 	
 	private func _buildPills(from cert: CertificatePair) -> [NBPillItem] {
 		var pills: [NBPillItem] = []
+		if let expiration = cert.expiration {
+			let days = Calendar.current.dateComponents([.day], from: Date(), to: expiration).day ?? 0
+			let title = expiration < Date() ? "Expired" : (days <= 7 ? "Urgent · \(days)d" : (days <= 30 ? "Expiring Soon · \(days)d" : "Healthy · \(days)d"))
+			pills.append(NBPillItem(title: title, icon: expiration < Date() ? "xmark.octagon" : "checkmark.shield", color: expiration < Date() ? .red : (days <= 30 ? .orange : .green)))
+		}
 		
 		if cert.ppQCheck == true {
 			pills.append(NBPillItem(title: .localized("PPQCheck"), icon: "checkmark.shield", color: .red))

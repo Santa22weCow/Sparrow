@@ -24,3 +24,7 @@ Certificate expiry/profile health cards, Quick Sign integration, clone assistant
 ## Additional Phase 5 increment
 
 Added persistent signing preset management, a native Dashboard summary, and privacy-safe source export/import (`sparrow-sources.json` data contains only source URL/name/pin state). Existing signing/import engines and Phase 4 Share Extension remain unchanged.
+
+## Certificate and source health increment
+
+Certificate cards now show a bounded health status derived from the existing expiry date (Healthy, Expiring Soon, Urgent, or Expired). `SparrowSourceHealthChecker` performs a single timeout-bounded HTTP/JSON check and reports Healthy, Slow, Unavailable, or Invalid without deleting sources.
