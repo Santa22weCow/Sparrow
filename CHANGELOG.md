@@ -1,11 +1,8 @@
 # Changelog
 
-## 1.0.1
+## Unreleased
 
-- Improved repository loading responsiveness.
-- Added official Sparrow update checking.
-- Added stable and beta update channels.
-- Added Sparrow Share Extension handoff and iPad IPA drag-and-drop.
-- Added diagnostics, activity history, dashboard summaries, signing presets, source backup/import, and health checks.
-
-Sparrow is an independent modified project based on Feather.
+- Added Sparrow Storage Cleaner.
+- Added Sparrow Icon Studio for file-based PNG icons.
+- Added Sparrow Sign & Install preflight workflow.
+- Added Sparrow Certificate Vault with Keychain-backed password protection and optional device authentication.
