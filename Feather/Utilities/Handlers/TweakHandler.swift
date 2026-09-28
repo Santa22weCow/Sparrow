@@ -260,32 +260,13 @@ class TweakHandler {
 
 	// Discovers all .appex bundles in the app's PlugIns and Extensions directories
 	private func _discoverAppExtensions() -> [URL] {
-		var extensions: [URL] = []
-		
-		let plugInsPath = _app.appendingPathComponent("PlugIns")
-		let extensionsPath = _app.appendingPathComponent("Extensions")
-		
-		for directory in [plugInsPath, extensionsPath] {
-			guard _fileManager.fileExists(atPath: directory.path) else { continue }
-			
-			do {
-				let contents = try _fileManager.contentsOfDirectory(
-					at: directory,
-					includingPropertiesForKeys: nil,
-					options: [.skipsHiddenFiles]
-				)
-				
-				let appexBundles = contents.filter { url in
-					url.pathExtension.lowercased() == "appex" && url.hasDirectoryPath
-				}
-				
-				extensions.append(contentsOf: appexBundles)
-			} catch {
-				Logger.misc.warning("Failed to enumerate \(directory.path): \(error.localizedDescription)")
-			}
+		guard let enumerator = _fileManager.enumerator(at: _app, includingPropertiesForKeys: [.isDirectoryKey], options: [.skipsHiddenFiles]) else { return [] }
+		return enumerator.compactMap { item in
+			guard let url = item as? URL, url.pathExtension.lowercased() == "appex", url.hasDirectoryPath else { return nil }
+			let plist = url.appendingPathComponent("Info.plist")
+			guard let info = NSDictionary(contentsOf: plist), info["CFBundleExecutable"] as? String != nil else { return nil }
+			return url
 		}
-		
-		return extensions
 	}
 
 	// Injects a dylib into an extension's executable
