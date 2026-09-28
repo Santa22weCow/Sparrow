@@ -125,3 +125,5 @@ Added a native Sparrow Dashboard, privacy-safe bounded activity history/diagnost
 Phase 5 now also includes persistent signing presets, a native Dashboard summary, and source list export/import that excludes credentials and certificate material.
 
 Phase 5 now includes expiry status pills on certificate cards and a timeout-bounded source health checker built on the existing repository URL model.
+
+Phase 5 final increment adds a confirmation-preserving Quick Sign entry point, broader Library search fields, clipboard source selection, and source/certificate health logic. Full clone editing and advanced batch preset UI remain follow-up limitations.

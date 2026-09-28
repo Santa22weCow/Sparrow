@@ -36,9 +36,10 @@ struct LibraryView: View {
 	
 	// horror
 	private func filteredAndSortedApps<T>(from apps: FetchedResults<T>) -> [T] where T: NSManagedObject {
-		apps.filter {
-			_searchText.isEmpty ||
-				(($0.value(forKey: "name") as? String)?.localizedCaseInsensitiveContains(_searchText) ?? false)
+		apps.filter { app in
+			_searchText.isEmpty || ["name", "identifier", "version", "filename", "sourceName"].contains { key in
+				(app.value(forKey: key) as? String)?.localizedCaseInsensitiveContains(_searchText) ?? false
+			}
 		}
 	}
 	

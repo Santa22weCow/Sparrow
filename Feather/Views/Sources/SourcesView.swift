@@ -21,10 +21,16 @@ struct SourcesView: View {
 	@State private var _addingSourceLoading = false
 	@State private var _isImportingSources = false
 	@State private var _exportData: Data?
+	@State private var _clipboardURLs: [URL] = []
+	@State private var _showClipboardSources = false
 	@State private var _searchText = ""
 	
 	private var _filteredSources: [AltSource] {
 		_sources.filter { _searchText.isEmpty || ($0.name?.localizedCaseInsensitiveContains(_searchText) ?? false) }
+	}
+	private var clipboardSourceURLs: [URL] {
+		let text = UIPasteboard.general.string ?? ""
+		return text.split(whereSeparator: { CharacterSet.whitespacesAndNewlines.contains($0.unicodeScalars.first!) }).compactMap { URL(string: String($0)) }.filter { $0.scheme == "https" || $0.scheme == "http" }
 	}
 	
 	@FetchRequest(
@@ -80,6 +86,10 @@ struct SourcesView: View {
 				ToolbarItemGroup(placement: .topBarLeading) {
 					Button("Export Sources", systemImage: "square.and.arrow.up") { _exportData = SparrowSourceTransfer.export(Array(_sources)) }
 					Button("Import Sources", systemImage: "square.and.arrow.down") { _isImportingSources = true }
+					Button("Add from Clipboard", systemImage: "doc.on.clipboard") {
+						_clipboardURLs = clipboardSourceURLs
+						_showClipboardSources = !_clipboardURLs.isEmpty
+					}
 				}
 				NBToolbarButton(
 					systemImage: "plus",
@@ -100,6 +110,10 @@ struct SourcesView: View {
 				if case .success(let url) = result, url.startAccessingSecurityScopedResource() { defer { url.stopAccessingSecurityScopedResource() }; _ = try? SparrowSourceTransfer.importRecords(from: url, into: Storage.shared) }
 			}
 			.sheet(isPresented: Binding(get: { _exportData != nil }, set: { if !$0 { _exportData = nil } })) { if let data = _exportData { ShareLink(item: data, preview: SharePreview("Sparrow Sources", image: Image(systemName: "globe"))).padding() } }
+			.alert("Add Sources from Clipboard", isPresented: $_showClipboardSources) {
+				Button("Add") { for url in _clipboardURLs { Storage.shared.addSource(url, identifier: url.absoluteString) { _ in } } }
+				Button("Cancel", role: .cancel) { }
+			} message: { Text("Found \(_clipboardURLs.count) web URL(s). Add them to Sparrow?") }
 		}
 		.task(id: Array(_sources)) {
 			await viewModel.fetchSources(_sources)

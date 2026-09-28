@@ -28,3 +28,7 @@ Added persistent signing preset management, a native Dashboard summary, and priv
 ## Certificate and source health increment
 
 Certificate cards now show a bounded health status derived from the existing expiry date (Healthy, Expiring Soon, Urgent, or Expired). `SparrowSourceHealthChecker` performs a single timeout-bounded HTTP/JSON check and reports Healthy, Slow, Unavailable, or Invalid without deleting sources.
+
+## Final integration increment
+
+Added Quick Sign as a safe entry point into the existing signing confirmation flow, expanded Library search across name/identifier/version/filename/source metadata, added clipboard URL source selection with confirmation, and added certificate/source health logic. No replacement signer or secret storage was introduced.

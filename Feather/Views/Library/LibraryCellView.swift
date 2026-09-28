@@ -166,6 +166,10 @@ extension LibraryCellView {
 		Button(.localized("Get Info"), systemImage: "info.circle") {
 			selectedInfoAppPresenting = AnyApp(base: app)
 		}
+		Button("Quick Sign", systemImage: "bolt.badge.checkmark") {
+			// Reuse the existing signing confirmation flow; Quick Sign never signs silently.
+			selectedSigningAppPresenting = AnyApp(base: app)
+		}
 	}
 	
 	@ViewBuilder
