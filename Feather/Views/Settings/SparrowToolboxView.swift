@@ -10,6 +10,7 @@ struct SparrowToolboxView: View {
 			}
 			Section("Power Tools") {
 				NavigationLink(destination: SparrowIPACompareView()) { Label("Compare IPAs", systemImage: "arrow.left.arrow.right") }
+				NavigationLink(destination: SparrowVersionVaultView()) { Label("Version Vault", systemImage: "clock.arrow.circlepath") }
 				Text("Icon Studio, Sparrow Drop, and Storage Cleaner will appear here as each tool receives its safe file-processing implementation.").foregroundStyle(.secondary)
 			}
 		}
