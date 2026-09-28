@@ -16,7 +16,7 @@ This audit records the remaining upstream names after the Sparrow product brandi
 ## Current product identity
 
 - Display name: Sparrow
-- Bundle identifier: `com.valentinobomba.sparrow`
+- Bundle identifier: `com.sparrow.app`
 - Product name: Sparrow
 - New deep-link scheme: `sparrow://`
 - Legacy `feather://` links remain supported for migration.

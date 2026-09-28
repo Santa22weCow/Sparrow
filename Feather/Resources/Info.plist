@@ -19,7 +19,7 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.valentinobomba.sparrow.ipa</string>
+				<string>com.sparrow.app.ipa</string>
 			</array>
 		</dict>
 		<dict>
@@ -33,7 +33,7 @@
 			<string>Alternate</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.valentinobomba.sparrow.tipa</string>
+				<string>com.sparrow.app.tipa</string>
 			</array>
 		</dict>
 	</array>
@@ -114,7 +114,7 @@
 			<key>CFBundleURLIconFile</key>
 			<string>feather_extension</string>
 			<key>CFBundleURLName</key>
-			<string>com.valentinobomba.sparrow</string>
+			<string>com.sparrow.app</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>sparrow</string>
