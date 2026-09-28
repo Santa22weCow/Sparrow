@@ -79,3 +79,25 @@ The queue now exposes failed-item retry logic, and identifier rules persist enab
 **How to test:** Download an app from a source, open its source detail, select Version History, and choose a version.
 
 **Known limitations:** Remaining enhancement phases are listed in `SPARROW_ENHANCEMENT_PLAN.md` and have not yet been implemented.
+
+## Phase 4 — Sparrow updates
+
+**Status:** Implemented.
+
+**Files changed:** `Feather/Views/Settings/SettingsView.swift`.
+
+**Architecture:** `SparrowUpdateManager` reads only the public Sparrow GitHub releases API, ignores prereleases for the stable channel, compares versions numerically, caches the last-check timestamp, and exposes release metadata and IPA assets. `SparrowUpdatesView` is available from Settings.
+
+**How to use:** Settings → Sparrow Updates → Check for Updates. A newer official IPA can be opened from the release asset link for explicit review, signing, and installation through the existing workflow.
+
+**Testing:** Build source validation completed; device/API scenarios remain to be exercised manually.
+
+**Limitations:** Beta channel selection, automatic 12–24 hour scheduling, and an in-app download/sign confirmation flow remain follow-up work.
+
+## Phase 4 — Share/import handoff
+
+**Status:** Existing document handoff preserved and branded metadata retained.
+
+**Architecture:** `Info.plist` registers IPA/TIPA document types. `FeatherApp` accepts file URLs, handles security-scoped provider URLs, and routes them to `FR.handlePackageFile`, which reuses the existing import pipeline. No separate import database or private signing material was added.
+
+**Limitations:** A dedicated Share Extension UI with Import & Sign controls, progress UI, and drag-and-drop remains future work.

@@ -74,6 +74,9 @@ struct SettingsView: View {
 				}
                 
 				NBSection(.localized("Features")) {
+					NavigationLink(destination: SparrowUpdatesView()) {
+						Label("Sparrow Updates", systemImage: "arrow.down.circle")
+					}
 					NavigationLink(destination: ConfigurationView()) {
 						Label(.localized("Signing Options"), systemImage: "signature")
 					}
@@ -104,6 +107,68 @@ struct SettingsView: View {
 				}
 			}
 		}
+	}
+}
+
+@MainActor
+final class SparrowUpdateManager: ObservableObject {
+	static let shared = SparrowUpdateManager()
+	@Published private(set) var release: Release?
+	@Published private(set) var isChecking = false
+	@Published private(set) var errorMessage: String?
+	private let endpoint = URL(string: "https://api.github.com/repos/valentinobomba10-afk/Sparrow/releases")!
+	private init() {}
+
+	struct Release: Codable, Identifiable {
+		let id: Int
+		let tagName: String
+		let name: String
+		let body: String?
+		let htmlURL: URL
+		let publishedAt: Date?
+		let prerelease: Bool
+		let assets: [Asset]
+		var version: String { tagName.trimmingCharacters(in: CharacterSet(charactersIn: "vV")) }
+		struct Asset: Codable { let name: String; let browserDownloadURL: URL; enum CodingKeys: String, CodingKey { case name; case browserDownloadURL = "browser_download_url" } }
+		enum CodingKeys: String, CodingKey { case id; case tagName = "tag_name"; case name; case body; case htmlURL = "html_url"; case publishedAt = "published_at"; case prerelease; case assets }
+	}
+
+	func check() async {
+		guard !isChecking else { return }
+		isChecking = true; errorMessage = nil
+		defer { isChecking = false }
+		var request = URLRequest(url: endpoint); request.setValue("Sparrow/1.0", forHTTPHeaderField: "User-Agent")
+		do {
+			let (data, response) = try await URLSession.shared.data(for: request)
+			guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw URLError(.badServerResponse) }
+			let decoder = JSONDecoder(); decoder.dateDecodingStrategy = .iso8601
+			let releases = try decoder.decode([Release].self, from: data).filter { !$0.prerelease }
+			release = releases.max { $0.version.compare($1.version, options: .numeric) == .orderedAscending }
+			UserDefaults.standard.set(Date(), forKey: "Sparrow.lastUpdateCheck")
+		} catch { errorMessage = "Unable to check Sparrow updates: \(error.localizedDescription)" }
+	}
+}
+
+struct SparrowUpdatesView: View {
+	@StateObject private var manager = SparrowUpdateManager.shared
+	private var current: String { Bundle.main.version }
+	var body: some View {
+		Form {
+			Section("Sparrow Updates") {
+				LabeledContent("Installed", value: current)
+				if let release = manager.release {
+					LabeledContent("Latest", value: release.version)
+					if release.version.compare(current, options: .numeric) == .orderedDescending {
+						Link("View Update", destination: release.htmlURL)
+						if let ipa = release.assets.first(where: { $0.name.lowercased().hasSuffix(".ipa") }) { Link("Download IPA", destination: ipa.browserDownloadURL) }
+					} else { Label("Sparrow is up to date", systemImage: "checkmark.circle.fill").foregroundStyle(.green) }
+				}
+				if let error = manager.errorMessage { Text(error).foregroundStyle(.red) }
+				Button("Check for Updates") { Task { await manager.check() } }.disabled(manager.isChecking)
+			}
+		}
+		.navigationTitle("Sparrow Updates")
+		.task { if manager.release == nil { await manager.check() } }
 	}
 }
 

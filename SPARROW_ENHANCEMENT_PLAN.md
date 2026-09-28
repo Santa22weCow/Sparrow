@@ -16,3 +16,5 @@
 | Phase 3: Watch component policy | Signing | OptionsManager, SigningOptionsView, SigningHandler | IMPLEMENTED | Keep by default or remove safely when disabled | Build passed |
 | Phase 3: Unique keychain groups | Signing | OptionsManager, SigningHandler | IMPLEMENTED | Optional deterministic group, only when profile permits | Build passed |
 | Phase 3: Extension/library management | Signing | EmbeddedComponentsView, EmbeddedLibrariesView, SigningView | IMPLEMENTED (read-only browser) | Component discovery, persisted toggles, non-mutating embedded library scan | Build passed |
+| Phase 4: Sparrow updates | Integration | SettingsView | IMPLEMENTED | Official GitHub release lookup, stable filtering, semantic version comparison | Build pending disk cleanup |
+| Phase 4: Share/import handoff | Integration | FeatherApp, AppFileHandler, Info.plist | EXISTING/PRESERVED | IPA document handoff uses the shared import pipeline and security-scoped URLs | Manual device test |
