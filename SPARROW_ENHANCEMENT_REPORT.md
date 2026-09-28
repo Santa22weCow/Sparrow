@@ -101,3 +101,15 @@ The queue now exposes failed-item retry logic, and identifier rules persist enab
 **Architecture:** `Info.plist` registers IPA/TIPA document types. `FeatherApp` accepts file URLs, handles security-scoped provider URLs, and routes them to `FR.handlePackageFile`, which reuses the existing import pipeline. No separate import database or private signing material was added.
 
 **Limitations:** A dedicated Share Extension UI with Import & Sign controls, progress UI, and drag-and-drop remains future work.
+
+## Phase 4 continuation — Share handoff and update workflow
+
+**Status:** Share handoff implementation added; extension target configuration is present in the project file, but full target verification is blocked by Xcode package checkout corruption in local DerivedData.
+
+**Files added:** `Feather/Backend/Import/SparrowShareHandoff.swift`, `SparrowShareExtension/ShareViewController.swift`, `SparrowShareExtension/Info.plist`, `SparrowShareExtension/SparrowShareExtension.entitlements`.
+
+**Architecture:** A Sparrow-specific App Group (`group.com.sparrow.app`) stores transactional pending jobs. The extension copies the provider file into a hidden partial directory, writes metadata, atomically renames the job, then writes a `ready` marker. Sparrow consumes ready jobs at launch through the existing `FR.handlePackageFile` import pipeline. The extension never signs.
+
+**Update workflow:** The existing official-release screen now provides channel-aware cached checks and IPA asset links. Download/sign/install remains explicit and is not performed silently.
+
+**Known limitations:** The local Xcode package graph must be repaired before both-target compilation can be confirmed. The extension UI is intentionally lightweight; app metadata preview and a full in-extension certificate availability check remain follow-up polish.

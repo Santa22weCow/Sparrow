@@ -158,8 +158,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 	) -> Bool {
 		_createPipeline()
 		_createDocumentsDirectories()
+		_processPendingShareImports()
 		ResetView.clearWorkCache()
 		return true
+	}
+
+	private func _processPendingShareImports() {
+		for (job, file) in SparrowShareHandoff.shared.consumeReadyJobs() {
+			FR.handlePackageFile(file) { _ in SparrowShareHandoff.shared.remove(job: job) }
+		}
 	}
 	
 	private func _createPipeline() {
