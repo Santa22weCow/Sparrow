@@ -28,8 +28,14 @@ class OptionsManager: ObservableObject {
 			self.persistenceWarning = nil
 			return
 		}
-		if UserDefaults.standard.data(forKey: _key) != nil {
-			UserDefaults.standard.set(UserDefaults.standard.data(forKey: _key), forKey: "Sparrow.invalidSigningOptionsBackup")
+		if let data = UserDefaults.standard.data(forKey: _key) {
+			if let saved = try? JSONSerialization.jsonObject(with: data) as? [String: Any], let defaultsData = try? JSONEncoder().encode(defaults), let defaultsObject = try? JSONSerialization.jsonObject(with: defaultsData) as? [String: Any] {
+				var merged = defaultsObject; saved.forEach { key, value in merged[key] = value }
+				if let mergedData = try? JSONSerialization.data(withJSONObject: merged), let migrated = try? JSONDecoder().decode(Options.self, from: mergedData) {
+					self.options = migrated; self.persistenceWarning = "Signing settings were migrated safely."; self.saveOptions(); return
+				}
+			}
+			UserDefaults.standard.set(data, forKey: "Sparrow.invalidSigningOptionsBackup")
 			self.persistenceWarning = "Saved signing settings were invalid and were reset safely."
 		}
 		self.options = defaults
