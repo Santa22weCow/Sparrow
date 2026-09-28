@@ -21,6 +21,7 @@
 		33CF13392DB5ACFB0021D4C5 /* SWCompression in Frameworks */ = {isa = PBXBuildFile; productRef = 33CF13382DB5ACFB0021D4C5 /* SWCompression */; };
 		570920BE2F98A4F0008C4A83 /* Feather.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 570920BD2F98A4F0008C4A83 /* Feather.xcconfig */; };
 		SPEXBUILD /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = SPEXTFILE; };
+		SPEMBEDBUILD /* Embed SparrowShareExtension.appex */ = {isa = PBXBuildFile; fileRef = SPEXTPROD; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -124,6 +125,7 @@
 				3379C1B52DA869A1004372DA /* Sources */,
 				3379C1B62DA869A1004372DA /* Frameworks */,
 				3379C1B72DA869A1004372DA /* Resources */,
+				SPEMBEDPHASE /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
@@ -220,6 +222,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		SPEMBEDPHASE /* Embed App Extensions */ = {isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = ""; dstSubfolderSpec = 13; files = (SPEMBEDBUILD,); name = "Embed App Extensions"; runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -482,8 +485,8 @@
 			};
 			name = Release;
 		};
-		SPEXDEBUG /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_ENTITLEMENTS = SparrowShareExtension/SparrowShareExtension.entitlements; INFOPLIST_FILE = SparrowShareExtension/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; PRODUCT_BUNDLE_IDENTIFIER = com.sparrow.app.share; PRODUCT_NAME = SparrowShareExtension; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Debug; };
-		SPEXRELEASE /* Release */ = {isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_ENTITLEMENTS = SparrowShareExtension/SparrowShareExtension.entitlements; INFOPLIST_FILE = SparrowShareExtension/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; PRODUCT_BUNDLE_IDENTIFIER = com.sparrow.app.share; PRODUCT_NAME = SparrowShareExtension; SWIFT_OPTIMIZATION_LEVEL = "-O"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Release; };
+		SPEXDEBUG /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_ENTITLEMENTS = SparrowShareExtension/SparrowShareExtension.entitlements; INFOPLIST_FILE = SparrowShareExtension/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; PRODUCT_BUNDLE_IDENTIFIER = com.sparrow.app.share; PRODUCT_NAME = SparrowShareExtension; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; SDKROOT = iphoneos; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; CLANG_ENABLE_MODULES = YES; }; name = Debug; };
+		SPEXRELEASE /* Release */ = {isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_ENTITLEMENTS = SparrowShareExtension/SparrowShareExtension.entitlements; INFOPLIST_FILE = SparrowShareExtension/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; PRODUCT_BUNDLE_IDENTIFIER = com.sparrow.app.share; PRODUCT_NAME = SparrowShareExtension; SWIFT_OPTIMIZATION_LEVEL = "-O"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; SDKROOT = iphoneos; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; CLANG_ENABLE_MODULES = YES; }; name = Release; };
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
