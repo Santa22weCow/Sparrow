@@ -4,7 +4,7 @@ import LocalAuthentication
 struct SparrowCertificateVaultView: View {
 	@FetchRequest(entity: CertificatePair.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CertificatePair.date, ascending: false)]) private var certificates: FetchedResults<CertificatePair>
 	@AppStorage("Sparrow.certificateVault.biometricProtection") private var biometricProtection = false
-	@State private var unlocked = false
+	@ObservedObject private var session = SparrowCertificateVaultSession.shared
 	@State private var error: String?
 	@State private var deleting: CertificatePair?
 
@@ -26,11 +26,11 @@ struct SparrowCertificateVaultView: View {
 				}
 				if certificates.isEmpty { Text("No signing identities imported.").foregroundStyle(.secondary) }
 			}
-			Section { Button(unlocked ? "Vault Unlocked" : "Unlock Vault") { unlock() }.disabled(unlocked || !biometricProtection) } footer: { Text(biometricProtection ? "Authentication is required before using remembered certificate passwords." : "Enable protection to require device authentication before sensitive signing operations.") }
+			Section { Button(session.isAuthorized && biometricProtection ? "Vault Unlocked" : "Unlock Vault") { unlock() }.disabled(session.isAuthorized && biometricProtection || !biometricProtection); if session.isAuthorized && biometricProtection { Button("Lock Immediately", role: .destructive) { session.lock() } } } footer: { Text(biometricProtection ? "Authentication is required before signing. Sessions expire after one minute and are never persisted across relaunch." : "Enable protection to require device authentication before sensitive signing operations.") }
 			if let error { Text(error).foregroundStyle(.red) }
 		}
 		.navigationTitle("Certificate Vault")
 		.confirmationDialog("Remove Signing Identity?", item: $deleting) { cert in Button("Remove", role: .destructive) { Storage.shared.deleteCertificate(for: cert) }; Button("Cancel", role: .cancel) { } } message: { _ in Text("This removes Sparrow's protected copy and its associated Keychain password.") }
 	}
-	private func unlock() { let context = LAContext(); var authError: NSError?; guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authError) else { error = authError?.localizedDescription ?? "Device authentication is unavailable."; return }; context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Unlock Sparrow Certificate Vault") { success, authError in DispatchQueue.main.async { unlocked = success; if !success { error = authError?.localizedDescription ?? "Authentication failed." } } } }
+	private func unlock() { session.authorize { success, reason in if !success { error = reason ?? "Authentication failed." } } }
 }
