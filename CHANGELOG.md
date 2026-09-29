@@ -1,5 +1,10 @@
 # Changelog
 
+## Sparrow 1.0.4
+
+- Fixed release packaging so the Sparrow Share Extension is signed inside the IPA.
+- Removed the release-only debug entitlement (`get-task-allow`).
+
 ## Sparrow 1.0.3
 
 - Added Library multi-selection access to the existing sequential bulk-signing queue.
