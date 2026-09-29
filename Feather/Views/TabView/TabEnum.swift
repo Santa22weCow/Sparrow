@@ -55,7 +55,7 @@ enum TabEnum: String, CaseIterable, Hashable {
 	}
 	
 	static var defaultTabs: [TabEnum] {
-		return [.library, .sources, .signing, .updates, .settings]
+		return [.store, .sources, .settings, .library]
 	}
 	
 	static var customizableTabs: [TabEnum] {

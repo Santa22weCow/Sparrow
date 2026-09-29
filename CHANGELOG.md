@@ -1,5 +1,10 @@
 # Changelog
 
+## Sparrow 1.0.8
+
+- Simplified the primary navigation to exactly four tabs: App Store, Sources, Settings, and Library.
+- Signing and Updates remain available from Settings and Advanced Tools.
+
 ## Sparrow 1.0.7
 
 - Fixed relaunch-time Sources freezes caused by synchronous repository-cache decoding on the main thread.
