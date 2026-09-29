@@ -1,5 +1,10 @@
 # Changelog
 
+## Sparrow 1.0.9
+
+- Redesigned App Store with category chips, featured cards, and must-have app rows.
+- Detects non-English descriptions and uses the repository's English localized description when provided.
+
 ## Sparrow 1.0.8
 
 - Simplified the primary navigation to exactly four tabs: App Store, Sources, Settings, and Library.
