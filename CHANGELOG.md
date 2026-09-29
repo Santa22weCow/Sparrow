@@ -1,5 +1,10 @@
 # Changelog
 
+## Sparrow 1.0.5
+
+- Added a signing-service compatibility build that packages only the main Sparrow app.
+- The optional Share Extension is not embedded, avoiding provisioning failures when ESign has no matching extension App ID.
+
 ## Sparrow 1.0.4
 
 - Fixed release packaging so the Sparrow Share Extension is signed inside the IPA.

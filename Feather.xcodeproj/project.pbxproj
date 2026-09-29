@@ -125,7 +125,6 @@
 				3379C1B52DA869A1004372DA /* Sources */,
 				3379C1B62DA869A1004372DA /* Frameworks */,
 				3379C1B72DA869A1004372DA /* Resources */,
-				SPEMBEDPHASE /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
