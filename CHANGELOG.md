@@ -1,5 +1,10 @@
 # Changelog
 
+## Sparrow 1.1.0
+
+- Reverted the experimental App Store redesign to the original repository app browser.
+- Preserved the four-tab navigation and Sources performance fixes.
+
 ## Sparrow 1.0.9
 
 - Redesigned App Store with category chips, featured cards, and must-have app rows.
