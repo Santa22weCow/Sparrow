@@ -1,5 +1,11 @@
 # Changelog
 
+## Sparrow 1.0.3
+
+- Added Library multi-selection access to the existing sequential bulk-signing queue.
+- Added validated signed IPA export through the system share sheet.
+- Added Advanced Tools download queue access and stronger source response validation.
+
 ## Unreleased — UI simplification
 
 - Library is now the default launch screen.
