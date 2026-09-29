@@ -10,6 +10,12 @@ enum RepositoryCache {
 		return try? JSONDecoder().decode(ASRepository.self, from: data)
 	}
 
+	static func repositoryAsync(for url: URL) async -> ASRepository? {
+		await Task.detached(priority: .utility) {
+			repository(for: url)
+		}.value
+	}
+
 	static func save(_ data: Data, for url: URL) {
 		try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
 		let file = directory.appendingPathComponent(url.absoluteString.data(using: .utf8)!.base64EncodedString())

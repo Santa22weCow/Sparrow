@@ -1,5 +1,10 @@
 # Changelog
 
+## Sparrow 1.0.7
+
+- Fixed relaunch-time Sources freezes caused by synchronous repository-cache decoding on the main thread.
+- Added cancellable background cache restoration before source refresh.
+
 ## Sparrow 1.0.6
 
 - Fixed Sources tab freezes by keeping the stable five-tab navigation on all iOS versions.

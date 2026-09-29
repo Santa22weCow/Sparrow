@@ -38,15 +38,20 @@ final class SourcesViewModel: ObservableObject {
 		}
 		// Show the last successful catalog immediately; fresh network data replaces
 		// it as each repository returns.
-		await MainActor.run {
-			for source in sourcesArray {
-				if let url = source.sourceURL, let cached = RepositoryCache.repository(for: url) {
-					self.sources[source] = cached
-				}
+		let cached = await withTaskGroup(of: (URL, ASRepository?).self, returning: [(URL, ASRepository)].self) { group in
+			for (url, _) in sourceURLs {
+				group.addTask { (url, await RepositoryCache.repositoryAsync(for: url)) }
 			}
+			var values = [(URL, ASRepository)]()
+			for await (url, repository) in group { if let repository { values.append((url, repository)) } }
+			return values
+		}
+		for (url, repository) in cached {
+			if let source = sourcesArray.first(where: { $0.sourceURL == url }) { self.sources[source] = repository }
 		}
 		
 		for startIndex in stride(from: 0, to: sourceURLs.count, by: batchSize) {
+			if Task.isCancelled { return }
 			let endIndex = min(startIndex + batchSize, sourcesArray.count)
 			let batch = sourceURLs[startIndex..<min(endIndex, sourceURLs.count)]
 			
