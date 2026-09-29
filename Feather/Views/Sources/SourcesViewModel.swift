@@ -32,6 +32,10 @@ final class SourcesViewModel: ObservableObject {
 		defer { isFinished = true }
 		
 		let sourcesArray = Array(sources)
+		let sourceURLs = sourcesArray.compactMap { source -> (URL, String)? in
+			guard let url = source.sourceURL else { return nil }
+			return (url, source.identifier ?? url.absoluteString)
+		}
 		// Show the last successful catalog immediately; fresh network data replaces
 		// it as each repository returns.
 		await MainActor.run {
@@ -42,39 +46,33 @@ final class SourcesViewModel: ObservableObject {
 			}
 		}
 		
-		for startIndex in stride(from: 0, to: sourcesArray.count, by: batchSize) {
+		for startIndex in stride(from: 0, to: sourceURLs.count, by: batchSize) {
 			let endIndex = min(startIndex + batchSize, sourcesArray.count)
-			let batch = sourcesArray[startIndex..<endIndex]
+			let batch = sourceURLs[startIndex..<min(endIndex, sourceURLs.count)]
 			
-			let batchResults = await withTaskGroup(of: (AltSource, ASRepository?).self, returning: [AltSource: ASRepository].self) { group in
-				for source in batch {
+			let batchResults = await withTaskGroup(of: (URL, ASRepository?).self, returning: [(URL, ASRepository)].self) { group in
+				for (url, _) in batch {
 					group.addTask {
-						guard let url = source.sourceURL else {
-							return (source, nil)
-						}
-						
 						do {
-							let (data, response) = try await URLSession.shared.data(from: url)
-							guard (response as? HTTPURLResponse)?.statusCode == 200 else { return (source, nil) }
+							var request = URLRequest(url: url)
+							request.timeoutInterval = 15
+							let (data, response) = try await URLSession.shared.data(for: request)
+							guard (response as? HTTPURLResponse)?.statusCode == 200 else { return (url, nil) }
 							let repo = try JSONDecoder().decode(ASRepository.self, from: data)
 							RepositoryCache.save(data, for: url)
-							return (source, repo)
-						} catch { return (source, nil) }
+							return (url, repo)
+						} catch { return (url, nil) }
 					}
 				}
 				
-				var results = [AltSource: ASRepository]()
-				for await (source, repo) in group {
-					if let repo {
-						results[source] = repo
-					}
-				}
+				var results = [(URL, ASRepository)]()
+				for await (url, repo) in group { if let repo { results.append((url, repo)) } }
 				return results
 			}
 			
 			await MainActor.run {
-				for (source, repo) in batchResults {
-					self.sources[source] = repo
+				for (url, repo) in batchResults {
+					if let source = sourcesArray.first(where: { $0.sourceURL == url }) { self.sources[source] = repo }
 				}
 			}
 		}

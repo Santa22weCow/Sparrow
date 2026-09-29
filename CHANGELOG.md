@@ -1,5 +1,11 @@
 # Changelog
 
+## Sparrow 1.0.6
+
+- Fixed Sources tab freezes by keeping the stable five-tab navigation on all iOS versions.
+- Prevented repository loading from capturing Core Data objects across asynchronous tasks.
+- Added network timeouts and safer source refresh behavior.
+
 ## Sparrow 1.0.5
 
 - Added a signing-service compatibility build that packages only the main Sparrow app.

@@ -118,7 +118,7 @@ struct SourcesView: View {
 				Button("Cancel", role: .cancel) { }
 			} message: { Text("Found \(_clipboardURLs.count) web URL(s). Add them to Sparrow?") }
 		}
-		.task(id: Array(_sources)) {
+		.task {
 			await viewModel.fetchSources(_sources)
 		}
 		#if !NIGHTLY && !DEBUG
