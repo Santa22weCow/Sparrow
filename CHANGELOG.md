@@ -9,6 +9,9 @@
 - Source import/export, clipboard actions, and the App Store are grouped behind the Sources More menu.
 - Empty Library and technical labels were simplified for first-time users.
 - Added Advanced Tools for JIT/pairing status, privacy-safe device identifiers, controlled file browsing, app capability inspection, and bulk signing access.
+- Added Library multi-selection entry into the existing sequential bulk-signing queue with preflight counts and retry/summary controls.
+- Added validated signed-IPA archive export through the system share sheet.
+- Added a secondary Download Queue screen for active source/manual downloads.
 
 ## Sparrow 1.0.2
 

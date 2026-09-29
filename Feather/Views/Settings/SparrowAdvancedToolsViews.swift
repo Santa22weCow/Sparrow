@@ -120,3 +120,25 @@ struct SparrowCapabilitiesView: View {
 		.navigationTitle("App Capabilities")
 	}
 }
+
+struct SparrowDownloadQueueView: View {
+	@ObservedObject private var manager = DownloadManager.shared
+	var body: some View {
+		List {
+			if manager.downloads.isEmpty { Label("No active downloads", systemImage: "arrow.down.circle").foregroundStyle(.secondary) }
+			ForEach(manager.downloads) { download in
+				VStack(alignment: .leading, spacing: 8) {
+					Text(download.fileName).lineLimit(1)
+					ProgressView(value: download.progress)
+					HStack {
+						Text("\(Int(download.progress * 100))%")
+						Spacer()
+						Button("Cancel", role: .destructive) { manager.cancelDownload(download) }
+					}
+					.font(.footnote)
+				}
+			}
+		}
+		.navigationTitle("Download Queue")
+	}
+}

@@ -174,3 +174,8 @@ The four existing Power Tools were extended as far as the iOS APIs and current a
 **Files:** `Feather/Views/Settings/SparrowAdvancedToolsViews.swift`, `Feather/Views/Settings/SparrowToolboxView.swift`.
 
 **Known limitations:** Existing DownloadManager and BulkSigningView remain the source of truth for download and sequential signing queues. Full JIT activation requires an external, platform-compatible pairing/JIT helper; Sparrow deliberately never fabricates a success result. Duplicate-import conflict UI and a richer source category browser remain follow-up work.
+
+### Bulk signing, export, and downloads continuation
+**Status:** PARTIAL/INTEGRATED. Library selection now passes selected imported app UUIDs into the existing sequential queue. Preflight counts, cancellation, retry-failed, and batch summary remain visible. Signed IPA export now produces a real archive and validates it before sharing. Active downloads have a secondary queue screen.
+
+**Known limitations:** Bulk Sign & Install still requires an explicit install confirmation per app; exact duplicate import choices, persistent pause/resume records, and full multi-source grouping are not yet complete.

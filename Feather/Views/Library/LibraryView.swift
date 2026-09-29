@@ -154,6 +154,14 @@ struct LibraryView: View {
 				}
 				
 				if _editMode.isEditing {
+					ToolbarItem(placement: .topBarTrailing) {
+						NavigationLink {
+							BulkSigningView(initialSelection: _selectedAppUUIDs)
+						} label: {
+							Label("Bulk Sign", systemImage: "signature")
+						}
+						.disabled(_selectedAppUUIDs.isEmpty)
+					}
 					NBToolbarButton(
 						.localized("Delete"),
 						systemImage: "trash",

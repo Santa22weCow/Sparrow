@@ -20,6 +20,7 @@ struct SparrowToolboxView: View {
 				NavigationLink(destination: SparrowFileManagerView()) { Label("File Manager", systemImage: "folder") }
 				NavigationLink(destination: SparrowCapabilitiesView()) { Label("App Capabilities", systemImage: "checklist") }
 				NavigationLink(destination: BulkSigningView()) { Label("Bulk Sign / Re-sign", systemImage: "square.stack.3d.up") }
+				NavigationLink(destination: SparrowDownloadQueueView()) { Label("Download Queue", systemImage: "arrow.down.circle") }
 			}
 		}
 		.navigationTitle("Sparrow Toolbox")

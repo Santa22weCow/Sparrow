@@ -7,6 +7,9 @@
 - Controlled File Manager for Sparrow-owned storage locations.
 - App Capability Viewer backed by the existing IPA Inspector.
 - Existing Bulk Signing queue exposed directly from Advanced Tools.
+- Library selection now opens the existing queue with selected imported apps, selected-count controls, preflight status, retry, cancellation, and summary.
+- Signed app export now archives the app bundle to a validated IPA and uses the system share sheet.
+- Active downloads are visible from Advanced Tools → Download Queue.
 
 ## Architecture
 
@@ -18,4 +21,4 @@ The Release app target was built with signing disabled. Manual device testing is
 
 ## Limitations
 
-JIT activation itself requires an external helper and a supported device/OS combination. The file manager intentionally cannot browse outside Sparrow-controlled directories. Duplicate IPA conflict resolution and richer source categorization remain future work.
+JIT activation itself requires an external helper and a supported device/OS combination. The file manager intentionally cannot browse outside Sparrow-controlled directories. Full duplicate IPA choice dialogs, source category grouping, persistent paused-download records, and interactive bulk install confirmations remain future work.

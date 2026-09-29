@@ -31,7 +31,7 @@ struct LibraryInfoView: View {
 						Button("Sign", systemImage: "signature") { isSigningPresented = true }
 						Button("Sign & Install", systemImage: "arrow.down.app") { isSigningPresented = true }
 					}
-					Button("Export", systemImage: "square.and.arrow.up") { UIApplication.open(Storage.shared.getUuidDirectory(for: app)!.toSharedDocumentsURL()!) }
+					Button("Export Signed IPA", systemImage: "square.and.arrow.up") { SparrowSignedIPAExporter.export(app) }
 				}
 				
 				_infoSection(for: app)
